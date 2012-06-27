@@ -24,10 +24,10 @@ var gCurrentMeeting = null;
 var gUseSuggested = false;
 
 var gLocation = null;
-if (document.host == 'localhost'){
-	/*
-	 * Setting some location for testing
-	 */
+/*
+ * Setting some location for testing
+ */
+if (location.host == 'localhost'){
 	gLocation = { latitude:12.9833, longitude:77.5833 };
 }
 
