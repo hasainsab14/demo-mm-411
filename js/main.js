@@ -24,6 +24,13 @@ var gCurrentMeeting = null;
 var gUseSuggested = false;
 
 var gLocation = null;
+if (document.host == 'localhost'){
+	/*
+	 * Setting some location for testing
+	 */
+	gLocation = { latitude:12.9833, longitude:77.5833 };
+}
+
 var gChangeSearchString = null;
 var gListings = [];
 var gSelectedListing = null;
@@ -182,6 +189,7 @@ function load() {
 }
 
 function nbInitialize(o) {
+	NativeBridge.reportLogStartSession();
 }
 
 function emptyCalendarHandler(result) {
@@ -262,6 +270,7 @@ function mainpage_init() {
 
 function mainpage_show() {
     setTimeout("handleNoLocation()", 5000);
+    NativeBridge.reportLogScreen('mainpage');
 }
 
 function handleNoLocation() {
@@ -612,7 +621,8 @@ function update_details() {
 function detailspage_show() {
     NativeBridge.setMessage(null);
     NativeBridge.setGrammar(generateDetailsGrammarUrl(), null, detailspage_detailsGrammarHandler);
-
+    NativeBridge.reportLogScreen('detailspage');
+    
     var endLatlng = new google.maps.LatLng(gSelectedListing.geometry.location.lat, gSelectedListing.geometry.location.lng);
     var end = gSelectedListing.vicinity;
     var myOptions = {
@@ -760,7 +770,8 @@ function directionspage_before_show() {
 function directionspage_show() {
     NativeBridge.setMessage(null);
     NativeBridge.setGrammar(generateDirectionsGrammarUrl(), null, directionspage_directionsGrammarHandler);
-
+    NativeBridge.reportLogScreen('directionspage');
+    
     $('#directions-panel').empty();
     var directionDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -891,7 +902,8 @@ function sharepage_before_show() {
     //NativeBridge.setMessage("Who do you want to share with?");
     NativeBridge.setMessage(null);
     NativeBridge.setGrammar(generateShareGrammarUrl(), null, sharepage_shareGrammarHandler);
-
+    NativeBridge.reportLogScreen('sharepage');
+    
     //if (gCurrentMeeting == null) {
     //    alert("no meeting!");
     //    $('#address-select').empty();
@@ -1044,6 +1056,7 @@ function addcontactdialog_init() {
 function addcontactdialog_before_show() {
     NativeBridge.setMessage(null);
     NativeBridge.setGrammar(gAddContactGrammars, null, addcontactdialog_contactGrammarHandler);
+    NativeBridge.reportLogScreen('addcontactdialog');
 }
 
 function addcontactdialog_show() {
